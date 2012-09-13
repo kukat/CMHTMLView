@@ -48,6 +48,7 @@
 
 @synthesize loaded, webView, competitionBlock, jsCode, imgURLforHash, imgURLs, maxWidthPortrait, maxWidthLandscape, blockTags, removeTags, fontFamily, fontSize, lineHeight, defaultImagePath, disableAHrefForImages, additionalStyle, imageLoading, imageClick, urlClick;
 @dynamic scrollView, images;
+@synthesize meta;
 
 
 #pragma mark - Memory Managment
@@ -154,8 +155,13 @@
         NSString* bodyStyle = [NSString stringWithFormat:kDefaultDocumentBodyStyle, self.fontFamily, self.fontSize, self.lineHeight];
         NSString* rotateStyle = [NSString stringWithFormat:kDefaultDocumentRotateStyle, self.maxWidthPortrait-18, self.maxWidthLandscape-18];
         
+        // <meta ...>
+        if (self.meta == nil) {
+            self.meta = @"";
+        }
+        
         // Create full page code
-        NSString* body = [NSString stringWithFormat:@"<html><head><script type=\"text/javascript\">%@</script> %@ <style type=\"text/css\">%@ %@ %@ %@</style></head><body>%@</body></html>", kFastClickJs, kDefaultDocumentMeta, kDefaultDocumentHtmlStyle, bodyStyle, rotateStyle, localacAdditionalStyle, loadHTML];
+        NSString* body = [NSString stringWithFormat:@"<html><head><script type=\"text/javascript\">%@</script> %@ <style type=\"text/css\">%@ %@ %@ %@</style></head><body>%@</body></html>", kFastClickJs, self.meta, kDefaultDocumentHtmlStyle, bodyStyle, rotateStyle, localacAdditionalStyle, loadHTML];
         
         // Start loading
         NSString *path = [[NSBundle mainBundle] bundlePath];
@@ -189,12 +195,14 @@
     self.fontSize = 14.0;
     self.lineHeight = 1.4;
     
+    self.meta = kDefaultDocumentMeta;
+    
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        self.maxWidthPortrait = 320;
-        self.maxWidthLandscape = 480;
+        self.maxWidthPortrait = self.bounds.size.width;
+        self.maxWidthLandscape = self.bounds.size.height;
     } else {
-        self.maxWidthPortrait = 768;
-        self.maxWidthLandscape = 1024;
+        self.maxWidthPortrait = self.bounds.size.width;
+        self.maxWidthLandscape = self.bounds.size.height;
     }
 }
 

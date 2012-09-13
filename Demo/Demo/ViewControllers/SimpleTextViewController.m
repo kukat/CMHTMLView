@@ -14,8 +14,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];    
-    CMHTMLView* htmlView = [[[CMHTMLView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)] autorelease];
+    CMHTMLView* htmlView = [[[CMHTMLView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width/2, self.view.frame.size.height/2)] autorelease];
     htmlView.backgroundColor = [UIColor whiteColor];
+    htmlView.meta = nil;
     htmlView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     NSString* filePath = [[NSBundle mainBundle] pathForResource:@"Simple" ofType:@"html"];  

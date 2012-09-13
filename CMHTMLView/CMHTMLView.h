@@ -29,6 +29,7 @@ typedef void (^UrlClickBlock)(NSString* url);
 @property (retain) NSString*            defaultImagePath;
 @property (assign) BOOL                 disableAHrefForImages;
 @property (retain) NSString*            additionalStyle;
+@property (retain) NSString*            meta;
 
 // Callbacks
 @property (copy) ImagePathBlock         imageLoading;
